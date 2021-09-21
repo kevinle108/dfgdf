@@ -47,9 +47,9 @@ const rcWriteinHtml = `
 ` 
 
 const ovalHtml = `
-  <td class="cell">
+  <td class="cell" role="cell">
 	<label>
-      <input id="{OVAL_ID}" type="checkbox" class="rcOval">
+      <input id="{OVAL_ID}" type="checkbox" class="rcOval" aria-label="{OVAL_ARIA_LABEL}">
       <span class="rcCheckmark" aria-hidden="true"></span>
 	</label>
   </td>
@@ -228,14 +228,14 @@ function buildRcCandidateOvals(race, raceIndex, candidateIndex) {
   if (race.candidates[candidateIndex].candidateCode.includes('writein')) {
     for (let rankIndex = 0; rankIndex < race.candidates.length; rankIndex++) {
       html += ovalHtml.replace(/{OVAL_ID}/g, `${raceIndex}_${candidateIndex}_${rankIndex}`)
-                      .replace(/{OVAL_ARIA_LABEL}/g, `Write-in`)
+                      .replace(/{OVAL_ARIA_LABEL}/g, `${choiceLabel(rankIndex+1)} choice Write-in`)
     }
   }
   else {
     // no heading
     for (let rankIndex = 0; rankIndex < race.candidates.length; rankIndex++) {
       html += ovalHtml.replace(/{OVAL_ID}/g, `${raceIndex}_${candidateIndex}_${rankIndex}`)
-                      .replace(/{OVAL_ARIA_LABEL}/g, `${candidateInfoString(raceIndex, candidateIndex)}`)
+                      .replace(/{OVAL_ARIA_LABEL}/g, `${choiceLabel(rankIndex+1)} choice ${candidateInfoString(raceIndex, candidateIndex)}`)
     }
   }
   return html;
